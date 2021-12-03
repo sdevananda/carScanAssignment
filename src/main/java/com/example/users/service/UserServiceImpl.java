@@ -1,5 +1,6 @@
 package com.example.users.service;
 
+import com.example.users.Exceptions.UserNotFound;
 import com.example.users.entity.User;
 import com.example.users.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(Long userId, User user) {
-        User userFromDb = userRepo.findById(userId).get();
+    public User updateUser(Long userId, User user) throws UserNotFound {
+        Optional<User> user1 = userRepo.findById(userId);
+        if(!user1.isPresent()){
+            throw new UserNotFound("User doesn't exist");
+        }
+        User userFromDb = user1.get();
 
         if(Objects.nonNull(user.getFname()) && !"".equalsIgnoreCase(user.getFname())){
             userFromDb.setFname(user.getFname());

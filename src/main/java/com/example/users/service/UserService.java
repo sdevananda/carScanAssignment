@@ -1,5 +1,6 @@
 package com.example.users.service;
 
+import com.example.users.Exceptions.UserNotFound;
 import com.example.users.entity.User;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface UserService {
 
     public void deleteUserById(Long userId);
 
-    public User updateUser(Long userId, User user);
+    public User updateUser(Long userId, User user) throws UserNotFound;
 }

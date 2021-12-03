@@ -1,5 +1,6 @@
 package com.example.users.controller;
 
+import com.example.users.Exceptions.UserNotFound;
 import com.example.users.entity.User;
 import com.example.users.service.UserService;
 import org.slf4j.Logger;
@@ -33,9 +34,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User fetchUserById(@PathVariable("id") Long userId){
+    public User fetchUserById(@PathVariable("id") Long userId) throws UserNotFound {
         LOGGER.info("Fetching user: "+userId);
-        return userService.fetchUserById(userId).get();
+        Optional<User> user = userService.fetchUserById(userId);
+        if(!user.isPresent()){
+            throw new UserNotFound("User doesn't exist");
+        }
+        return user.get();
     }
 
     @DeleteMapping("{id}")
@@ -46,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public User updateUser(@PathVariable("id") Long userId , @RequestBody User user){
+    public User updateUser(@PathVariable("id") Long userId , @RequestBody User user) throws UserNotFound {
         LOGGER.info("Updating user: "+userId);
         return userService.updateUser(userId,user);
     }
