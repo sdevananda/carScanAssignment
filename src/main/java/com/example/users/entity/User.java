@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "usertable")
+@Table(name = "usertable", uniqueConstraints={@UniqueConstraint(columnNames ={"fname","lname","dob","city","mobile"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
