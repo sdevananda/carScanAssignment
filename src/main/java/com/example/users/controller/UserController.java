@@ -5,6 +5,7 @@ import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping
-    public User user(@RequestBody User user){
+    public User user(@Valid @RequestBody User user){
 
         //return "";
         return userService.saveUser(user);
