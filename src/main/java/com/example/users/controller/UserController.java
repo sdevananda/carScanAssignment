@@ -27,7 +27,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<User> fetchUserById(@PathVariable("id") Long userId){
-        return userService.fetchUserById(userId);
+    public User fetchUserById(@PathVariable("id") Long userId){
+        return userService.fetchUserById(userId).get();
+    }
+
+    @DeleteMapping("{id}")
+    public String deleteUserById(@PathVariable("id") Long userId){
+        userService.deleteUserById(userId);
+        return  "Deleted User";
+    }
+
+    @PutMapping("{id}")
+    public User updateUser(@PathVariable("id") Long userId , @RequestBody User user){
+        return userService.updateUser(userId,user);
     }
 }
